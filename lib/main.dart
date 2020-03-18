@@ -46,7 +46,9 @@ class _HomeState extends State<Home> {
           },
         ),FlatButton(
           child: Text('Query'),
-          onPressed: (){},
+          onPressed: (){
+            _query();
+          },
         ),FlatButton(
           child: Text('Update'),
           onPressed: (){},
@@ -67,6 +69,12 @@ class _HomeState extends State<Home> {
     final id = await databaseHelper.insert(row);
 
     print('insert row id: $id');
+  }
+
+  void _query() async{
+    final allRows = await databaseHelper.queryAllRows();
+    print('query all rows:');
+    allRows.forEach((row){print(row);});
   }
 }
 

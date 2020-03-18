@@ -63,5 +63,26 @@ class DatabaseHelper {
     return await db.query(dogTable);
   }
 
+  // All of the methods (insert, query, update, delete) can also be done using
+  // raw SQL commands. This method uses a raw query to give the row count.
+  Future<int> queryRowCount() async {
+    Database db = await instance.database;
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $dogTable'));
+  }
+
+
+  //We are assuming here that the id column in the map is set. The other
+  // column values will be used to update the row.
+  Future<int> update(Map<String,dynamic> row) async {
+    Database db = await instance.database;
+    db.update(dogTable, row,where: '$columnId = ?',whereArgs: [1]);
+  }
+
+  //Deletes the row specified by the id. The number of affected rows is
+  // returned. This should be 1 as long as the row exists.
+  Future<int> delete(int id)async{
+    Database db =  await instance.database;
+    db.delete(dogTable,where: '$columnId=?',whereArgs: [5]);
+  }
 
 }
