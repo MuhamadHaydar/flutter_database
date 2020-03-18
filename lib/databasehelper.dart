@@ -45,4 +45,23 @@ class DatabaseHelper {
     await db.execute(
         'CREATE TABLE $dogTable( $columnId INTEGER PRIMARY KEY, $columnName TEXT NOT NULL, $columnAge INTEGER NOT NULL)');
   }
+
+  //Helper Methods
+  // Inserts a row in the database where each key in the Map is a column name
+  // and the value is the column value. The return value is the id of the
+  // inserted row.
+
+  Future<int> insert(Map<String,dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert(dogTable, row);
+  }
+
+  // All of the rows are returned as a list of maps, where each map is
+  // a key-value list of columns.
+  Future<List<Map<String,dynamic>>> queryAllRows ()async{
+    Database db = await instance.database;
+    return await db.query(dogTable);
+  }
+
+
 }

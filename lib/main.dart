@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterdatabase/databasehelper.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -29,6 +30,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  DatabaseHelper databaseHelper = DatabaseHelper.instance;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +41,9 @@ class _HomeState extends State<Home> {
       children: <Widget>[
         FlatButton(
           child: Text('Insert'),
-          onPressed: (){},
+          onPressed: (){
+            _insert();
+          },
         ),FlatButton(
           child: Text('Query'),
           onPressed: (){},
@@ -51,7 +57,20 @@ class _HomeState extends State<Home> {
       ],
     );
   }
+
+  void _insert()async{
+    Map<String,dynamic> row = {
+     DatabaseHelper.columnName: 'Bob',
+      DatabaseHelper.columnAge: 11
+    };
+
+    final id = await databaseHelper.insert(row);
+
+    print('insert row id: $id');
+  }
 }
+
+
 
 
 
