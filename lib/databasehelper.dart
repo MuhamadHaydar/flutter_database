@@ -72,17 +72,18 @@ class DatabaseHelper {
 
 
   //We are assuming here that the id column in the map is set. The other
-  // column values will be used to update the row.
+  // column values will be used to update the row, it returns number of
+  // updated rows.
   Future<int> update(Map<String,dynamic> row) async {
     Database db = await instance.database;
-    db.update(dogTable, row,where: '$columnId = ?',whereArgs: [1]);
+    return db.update(dogTable, row,where: '$columnId = ?',whereArgs: [3]);
   }
 
   //Deletes the row specified by the id. The number of affected rows is
   // returned. This should be 1 as long as the row exists.
   Future<int> delete(int id)async{
     Database db =  await instance.database;
-    db.delete(dogTable,where: '$columnId=?',whereArgs: [5]);
+    db.delete(dogTable,where: '$columnId=?',whereArgs: [id]);
   }
 
 }

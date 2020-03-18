@@ -51,10 +51,14 @@ class _HomeState extends State<Home> {
           },
         ),FlatButton(
           child: Text('Update'),
-          onPressed: (){},
+          onPressed: (){
+            _update();
+          },
         ),FlatButton(
           child: Text('Delete'),
-          onPressed: (){},
+          onPressed: (){
+            _delete();
+          },
         )
       ],
     );
@@ -75,6 +79,24 @@ class _HomeState extends State<Home> {
     final allRows = await databaseHelper.queryAllRows();
     print('query all rows:');
     allRows.forEach((row){print(row);});
+  }
+
+  void _update()async{
+    Map<String,dynamic> row = {
+      DatabaseHelper.columnName: 'Keval',
+      DatabaseHelper.columnAge: 31
+    };
+
+    final updatedRow = await databaseHelper.update(row);
+
+    print('Number of updated Row is $updatedRow');
+  }
+
+  void _delete()async{
+    // we get back the id of the last row by counting it.
+    final id = await databaseHelper.queryRowCount();
+    final deletedRow = await databaseHelper.delete(id);
+    print('This is deleted row $deletedRow: row id: $id');
   }
 }
 
